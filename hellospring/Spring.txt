@@ -1,0 +1,99 @@
+
+    @GetMapping // HTTP Get Method에 해당하는 단축 표현으로 서버의 리소스를 조회할 때 사용합니다.
+    /GetMapping?name=입력값
+
+    Model -> viewResolver로 값 넘기는 방법인듯?
+
+    @RequestParam("가져올 데이터의 이름") [데이터타입] [가져온데이터를 담을 변수]
+
+    return "hello-template"; //뷰로 값을 넘겨줌
+
+    @ResponseBody 를 사용하면 뷰 리졸버( viewResolver )를 사용하지 않음 대신에 HTTP의 BODY에 문자 내용을 직접 반환
+        - HTTP의 BODY에 문자 내용을 직접 반환
+        - viewResolver 대신에 HttpMessageConverter 가 동작
+        - 기본 문자처리: StringHttpMessageConverter
+        - 기본 객체처리: MappingJackson2HttpMessageConverter
+        - byte 처리 등등 기타 여러 HttpMessageConverter가 기본으로 등록되어 있음
+
+    컨트롤러: 웹 MVC의 컨트롤러 역할
+    서비스: 핵심 비즈니스 로직 구현
+    리포지토리: 데이터베이스에 접근, 도메인 객체를 DB에 저장하고 관리
+    도메인: 비즈니스 도메인 객체, 예) 회원, 주문, 쿠폰 등등 주로 데이터베이스에 저장하고 관리됨
+
+----------------------------------------------
+    컨트롤러 -> 서비스 -> 리포지토리 -> DB
+           -> 도메인 <-
+----------------------------------------------
+
+    Optional : 개발을 할 때 가장 많이 발생하는 예외 중 하나가 바로 NPE(NullPointerException)이다.
+               Optional<T>는 null이 올 수 있는 값을 감싸는 Wrapper 클래스로, 참조하더라도 NPE가 발생하지 않도록 도와준다.
+
+               * Optional.of() - 값이 Null이 아닌 경우
+               * Optional.ofNullbale() - 값이 Null일수도, 아닐수도 있는 경우
+
+               Optional은 값을 Wrapping하고 다시 풀고, null 일 경우에는 대체하는 함수를 호출하는 등의 오버헤드가 있으므로 잘못 사용하면 시스템 성능이 저하된다.
+               그렇기 때문에 메소드의 반환 값이 절대 null이 아니라면 Optional을 사용하지 않는 것이 좋다.
+               즉, Optional은 메소드의 결과가 null이 될 수 있으며, null에 의해 오류가 발생할 가능성이 매우 높을 때 반환값으로만 사용되어야 한다.
+               출처: https://mangkyu.tistory.com/70 [MangKyu's Diary:티스토리]
+
+    Map의 동시성 문제를 고려하여 실무에서는 ConcurrentHashMap, AtomicLong 사용
+       ConcurrentHashMap :
+       AtomicLong :
+
+    Assertion / assertThat
+
+    @AfterEach : 한번에 여러 테스트를 실행하면 메모리 DB에 직전 테스트의 결과가 남을 수 있다. 이렇게 되면 다음 이전 테스트 때문에 다음 테스트가 실패할 가능성이 있다.
+                 @AfterEach 를 사용하면 각 테스트가 종료될 때마다 이 기능을 실행한다. 여기서는 메모리 DB에 저장된 데이터를 삭제한다.
+
+    DI  (Dependency Injection)
+        DI는 외부에서 객체 간의 관계(의존성)를 결정해 주는데 즉, 객체를 직접 생성하는 것이 아니라 외부에서 생성 후 주입시켜 주는 방식이라 할 수 있다.
+        DI를 통해 객체 간의 관계를 동적으로 주입하여 유연성을 확보하고 결합도를 낮출 수 있다.
+        출처: https://backendcode.tistory.com/249 [무작정 개발:티스토리]
+
+    @Autowired 가 있으면 스프링이 연관된 객체를 스프링 컨테이너에서 찾아서 넣어준다.
+    이렇게 객체 의존관계를 외부에서 넣어주는 것을 DI (Dependency Injection), 의존성 주입이라 한다
+
+        스프링 빈을 등록하는 2가지 방법
+            1. 컴포넌트 스캔과 자동 의존관계 설정
+            2. 자바 코드로 직접 스프링 빈 등록하기
+
+        컴포넌트 스캔 원리
+            @Component 애노테이션이 있으면 스프링 빈으로 자동 등록된다.
+            @Controller 컨트롤러가 스프링 빈으로 자동 등록된 이유도 컴포넌트 스캔 때문이다.
+            @Component 를 포함하는 다음 애노테이션도 스프링 빈으로 자동 등록된다.
+                @Controller
+                @Service
+                @Repository
+        memberController -> memberService -> memberRepository
+
+        config 자바코드로 직접 스프링 빈을 등록하는 것이 보기가 좋다
+
+    @Configuration
+    @Bean
+
+
+    //h2base 설정
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+    runtimeOnly 'com.h2database:h2'
+
+    Datasource : 데이터베이스 커넥션을 획득할 때 사용하는 객체다. 스프링 부트는 데이터베이스 커넥션 정보를
+                 바탕으로 DataSource를 생성하고 스프링 빈으로 만들어둔다. 그래서 DI를 받을 수 있다.
+
+
+    application.properties
+        spring.datasource.url=jdbc:h2:tcp://localhost/~/test
+        spring.datasource.driver-class-name=org.h2.Driver
+        spring.datasource.username=sa
+        spring.jpa.show-sql=true
+        spring.jpa.hibernate.ddl-auto=none
+
+        // show-sql : JPA가 생성하는 SQL을 출력한다.
+           ddl-auto : JPA는 테이블을 자동으로 생성하는 기능을 제공하는데 none 를 사용하면 해당 기능을 끈다.
+                      create 를 사용하면 엔티티 정보를 바탕으로 테이블도 직접 생성해준다
+
+    @Entity :
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY) :
+
+    @EntityManager
+

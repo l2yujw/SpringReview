@@ -1,0 +1,20 @@
+*Lombok
+
+    장점
+        1. 어노테이션 기반의 코드 자동 생성을 통한 생산성 향상
+        2. 반복되는 코드 다이어트를 통한 가독성 및 유지보수성 향상
+        3. Getter, Setter 이외에 Builder(빌더) 패턴이나 로그 생성 등 다양하게 활용 가능
+
+    단점
+        1. 만약 Intelli J에서 개발 시에는 모든 팀원이 Lombok 플러그인을 설치하여야만 한다.
+        2. 무분별한 어노테이션을 사용하면, 순환 참조 또는 무한 재귀 호출로 인해 StackOverFlow 가 발생할 수 있다.
+
+    @Data
+        - 해당 어노테이션은 @ToString, @EqualsAndHashCode, @Getter, @Setter, @RequiredArgsConstructor 를 자동 완성시켜준다.
+        !! 무분별하게 사용하다 보면 프로그램이 무거워지고 객체의 안정성을 해치기 때문에 사용을 지양
+
+    @AllArgsConstructor, @RequiredArgsContstructor 사용 금지
+        - 두 어노테이션은 인스턴스 멤버의 순서가 중요하다. 왜냐하면 인스턴스 멤버의 순서가 생성자의 파라미터의 순서와 동일하기 때문이다.
+        - 순서가 달라지면 타입이 같을 경우 컴파일 오류는 발생하지 않고 파악하기가 쉽지가 않아진다.
+
+    @Getter @Setter 정도만 사용하는 것이 좋다
