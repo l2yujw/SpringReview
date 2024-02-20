@@ -1,3 +1,6 @@
 BeanPropertySqlParameterSource : 빈 객체를 Map 객체로 변환시켜주는 객체 / 일반적으로 DB에서 가져온 데이터를 저장하기 위해 사용
 NamedParameterJdbcTemplate : 미완성의 JDBC Statement에 이제까지 쓰던 `?`(place holder) 대신에, 이름을 지어준 파라미터로 대체할 수 있게 된다.
 MapSqlParameterSource : 생성자 아니면 addValue라는 메서드를 통해서 파라미터 이름과 값을 짝지어서 지정할 수 있다.
+
+OGNL : OGNL은 "Object-Graph Navigation Language"의 약자로, Java 기반의 표현 언어입니다.
+       OGNL은 주로 프레임워크인 Apache Struts, Apache Tapestry, 그리고 Java 객체 그래프를 다루는 기타 프로젝트에서 사용됩니다.
