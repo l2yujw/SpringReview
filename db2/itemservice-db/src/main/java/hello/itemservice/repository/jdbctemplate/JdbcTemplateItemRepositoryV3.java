@@ -54,7 +54,6 @@ public class JdbcTemplateItemRepositoryV3 implements ItemRepository {
         SqlParameterSource param = new MapSqlParameterSource()
                 .addValue("itemName", updateParam.getItemName())
                 .addValue("price", updateParam.getPrice())
-                .addValue("price", updateParam.getQuantity())
                 .addValue("quantity", updateParam.getQuantity())
                 .addValue("id", itemId);
 
